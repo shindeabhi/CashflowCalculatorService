@@ -20,6 +20,18 @@ public class DividendActor extends AbstractLoggingActor {
         );
     }
 
+    @Override
+    public void preStart() throws Exception {
+        log().info("Pre-Start Dividend Actor");
+        super.preStart();
+    }
+
+    @Override
+    public void postStop() throws Exception {
+        super.postStop();
+        log().info("Post-Start Dividend Actor");
+    }
+
     private void processDividendMessage(DividendCalculationParam message) {
         log().info("Dividend Amount:--"+dividendCalculator.calculateCashflow(message));
     }

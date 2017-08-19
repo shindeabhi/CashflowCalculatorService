@@ -16,13 +16,14 @@ public class ActorSystemInitializer {
     public static void main(String[] args) {
         ActorSystem cashflowSystem = ActorSystem.create("cashflow_actor_system");
         ActorRef dividendActor = cashflowSystem.actorOf(Props.create(DividendActor.class), "dividend_actor");
-
-        for (int i = 0; i < 100; i++) {
+        //So this actor is created as follows: /root/user/cashflow_actor_system/dividend_actor
+        for (int i = 0; i < 10; i++) {
             dividendActor.tell(
                     new DividendCalculationParam(Long.valueOf(123456),
                             BigDecimal.valueOf(123.5678),
                             BigDecimal.valueOf(Math.random())),
                     ActorRef.noSender());
         }
+        cashflowSystem.shutdown();
     }
 }
