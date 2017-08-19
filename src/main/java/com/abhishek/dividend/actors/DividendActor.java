@@ -11,6 +11,8 @@ import com.abhishek.calculators.DividendCalculatorImpl;
  */
 public class DividendActor extends AbstractLoggingActor {
 
+    Integer nosOfMessage = 0;
+
     DividendCalculator dividendCalculator = new DividendCalculatorImpl();
 
     {
@@ -29,10 +31,14 @@ public class DividendActor extends AbstractLoggingActor {
     @Override
     public void postStop() throws Exception {
         super.postStop();
-        log().info("Post-Start Dividend Actor");
+        log().info("Post-Stop Dividend Actor");
     }
 
-    private void processDividendMessage(DividendCalculationParam message) {
-        log().info("Dividend Amount:--"+dividendCalculator.calculateCashflow(message));
+    private void processDividendMessage(DividendCalculationParam message) throws Exception {
+        nosOfMessage++;
+        if (nosOfMessage > 10) {
+            throw new Exception("Cannot process more than 10 messages!!!");
+        }
+        log().info("Dividend Amount:--" + dividendCalculator.calculateCashflow(message));
     }
 }
