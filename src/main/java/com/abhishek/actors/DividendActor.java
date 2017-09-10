@@ -1,4 +1,4 @@
-package com.abhishek.dividend.actors;
+package com.abhishek.actors;
 
 import akka.actor.AbstractLoggingActor;
 import akka.japi.pf.ReceiveBuilder;
@@ -35,10 +35,12 @@ public class DividendActor extends AbstractLoggingActor {
     }
 
     private void processDividendMessage(DividendCalculationParam message) throws Exception {
+        /*
         nosOfMessage++;
         if (nosOfMessage > 10) {
             throw new Exception("Cannot process more than 10 messages!!!");
         }
+        */
         log().info("Dividend Amount:--" + dividendCalculator.calculateCashflow(message));
     }
 }

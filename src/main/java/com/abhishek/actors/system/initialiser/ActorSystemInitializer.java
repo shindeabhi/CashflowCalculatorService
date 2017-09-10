@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import com.abhishek.calculators.DividendCalculationParam;
-import com.abhishek.dividend.actors.DividendActor;
+import com.abhishek.actors.DividendActor;
 
 import java.math.BigDecimal;
 

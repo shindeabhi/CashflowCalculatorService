@@ -3,8 +3,10 @@ package com.abhishek.com.abhishek.supervisors;
 import akka.actor.*;
 import akka.japi.pf.DeciderBuilder;
 import akka.japi.pf.ReceiveBuilder;
+import com.abhishek.actors.EquityActor;
 import com.abhishek.calculators.DividendCalculationParam;
-import com.abhishek.dividend.actors.DividendActor;
+import com.abhishek.calculators.EquityCalculationParam;
+import com.abhishek.actors.DividendActor;
 import scala.concurrent.duration.Duration;
 
 import java.util.concurrent.TimeUnit;
@@ -18,12 +20,14 @@ public class CashflowSystemSupervisor extends AbstractLoggingActor {
 
     final ActorRef dividendActor = getContext().actorOf(Props.create(DividendActor.class), "dividend_actor");
 
+    final ActorRef equityActor = getContext().actorOf(Props.create(EquityActor.class), "equity_actor");
+
     {
         receive(ReceiveBuilder
-                .match(DividendCalculationParam.class, this::forwardMessageToChildActor)
+                .match(DividendCalculationParam.class, this::forwardMessageToChildActorForDivCalculation)
                 .build()
         );
-    }
+  }
 
     @Override
     public SupervisorStrategy supervisorStrategy() {
@@ -36,7 +40,11 @@ public class CashflowSystemSupervisor extends AbstractLoggingActor {
         );
     }
 
-    private void forwardMessageToChildActor(DividendCalculationParam message) {
+    private void forwardMessageToChildActorForDivCalculation(DividendCalculationParam message) {
         dividendActor.forward(message, getContext());
+    }
+
+    private void forwardMessageToChildActorForEquityCalculation(EquityCalculationParam message) {
+        equityActor.forward(message,getContext());
     }
 }

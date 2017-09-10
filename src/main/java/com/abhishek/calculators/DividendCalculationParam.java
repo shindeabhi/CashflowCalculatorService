@@ -2,23 +2,23 @@ package com.abhishek.calculators;
 
 import java.math.BigDecimal;
 
-public class DividendCalculationParam {
+public class DividendCalculationParam implements CalculationParam {
     private final Long portfolioNo;
     private final BigDecimal nosOfUnitsInPortfolio;
-    private final BigDecimal pricePerUnit;
+    private final BigDecimal dividendDeclaredPerUnit;
 
-    public DividendCalculationParam(Long portfolioNo, BigDecimal nosOfUnitsInPortfolio, BigDecimal pricePerUnit) {
+    public DividendCalculationParam(Long portfolioNo, BigDecimal nosOfUnitsInPortfolio, BigDecimal dividendDeclaredPerUnit) {
         this.portfolioNo = portfolioNo;
         this.nosOfUnitsInPortfolio = nosOfUnitsInPortfolio;
-        this.pricePerUnit = pricePerUnit;
+        this.dividendDeclaredPerUnit = dividendDeclaredPerUnit;
     }
 
     public BigDecimal getNosOfUnitsInPortfolio() {
         return nosOfUnitsInPortfolio;
     }
 
-    public BigDecimal getPricePerUnit() {
-        return pricePerUnit;
+    public BigDecimal getDividendDeclaredPerUnit() {
+        return dividendDeclaredPerUnit;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class DividendCalculationParam {
         return "DividendCalculationParam{" +
                 "portfolioNo=" + portfolioNo +
                 ", nosOfUnitsInPortfolio=" + nosOfUnitsInPortfolio +
-                ", pricePerUnit=" + pricePerUnit +
+                ", dividendDeclaredPerUnit=" + dividendDeclaredPerUnit +
                 '}';
     }
 }
