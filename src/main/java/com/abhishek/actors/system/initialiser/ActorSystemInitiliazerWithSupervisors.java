@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import com.abhishek.calculators.DividendCalculationParam;
+import com.abhishek.calculators.EquityCalculationParam;
 import com.abhishek.com.abhishek.supervisors.CashflowSystemSupervisor;
 
 import java.math.BigDecimal;
@@ -20,6 +21,12 @@ public class ActorSystemInitiliazerWithSupervisors {
         for (int i = 0; i < 10; i++) {
             cashflowSystemSupervisor.tell(
                     new DividendCalculationParam(Long.valueOf(123456),
+                            BigDecimal.valueOf(123.5678),
+                            BigDecimal.valueOf(Math.random())),
+                    ActorRef.noSender());
+
+            cashflowSystemSupervisor.tell(
+                    new EquityCalculationParam(Long.valueOf(123456),
                             BigDecimal.valueOf(123.5678),
                             BigDecimal.valueOf(Math.random())),
                     ActorRef.noSender());

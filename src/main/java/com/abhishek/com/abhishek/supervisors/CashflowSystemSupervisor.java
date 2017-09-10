@@ -4,6 +4,7 @@ import akka.actor.*;
 import akka.japi.pf.DeciderBuilder;
 import akka.japi.pf.ReceiveBuilder;
 import com.abhishek.actors.EquityActor;
+import com.abhishek.calculators.CalculationParam;
 import com.abhishek.calculators.DividendCalculationParam;
 import com.abhishek.calculators.EquityCalculationParam;
 import com.abhishek.actors.DividendActor;
@@ -24,10 +25,10 @@ public class CashflowSystemSupervisor extends AbstractLoggingActor {
 
     {
         receive(ReceiveBuilder
-                .match(DividendCalculationParam.class, this::forwardMessageToChildActorForDivCalculation)
+                .match(CalculationParam.class, this::forwardForCalculation)
                 .build()
         );
-  }
+    }
 
     @Override
     public SupervisorStrategy supervisorStrategy() {
@@ -40,11 +41,11 @@ public class CashflowSystemSupervisor extends AbstractLoggingActor {
         );
     }
 
-    private void forwardMessageToChildActorForDivCalculation(DividendCalculationParam message) {
-        dividendActor.forward(message, getContext());
-    }
-
-    private void forwardMessageToChildActorForEquityCalculation(EquityCalculationParam message) {
-        equityActor.forward(message,getContext());
+    private void forwardForCalculation(CalculationParam message) {
+        if (message instanceof EquityCalculationParam) {
+            equityActor.forward(message, getContext());
+        } else if (message instanceof DividendCalculationParam) {
+            dividendActor.forward(message, getContext());
+        }
     }
 }
